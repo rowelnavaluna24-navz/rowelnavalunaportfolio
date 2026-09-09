@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10233F;
+    --blue-deep:#1B4A8B;
+    --blue-accent:#3E7CB1;
+    --blue-bright:#2E6FD9;
+    --paper:#FFFFFF;
+    --wash:#F3F6FA;
+    --line:#D7E3F0;
+    --mono:'IBM Plex Mono', monospace;
+    --sans:'Inter', sans-serif;
+    --display:'Sora', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.55;
+  }
+  a{color:inherit;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 32px;}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:40;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:68px;
+  }
+  .logo{
+    font-family:var(--display);font-weight:600;font-size:19px;
+    color:var(--blue-deep);text-decoration:none;letter-spacing:-0.01em;
+  }
+  .logo span{color:var(--blue-bright);}
+  nav{display:flex;gap:28px;align-items:center;}
+  nav button, nav a{
+    background:none;border:none;cursor:pointer;
+    font-family:var(--sans);font-size:15px;font-weight:500;
+    color:var(--ink);text-decoration:none;padding:6px 0;
+    position:relative;
+  }
+  nav button:hover, nav a:hover{color:var(--blue-bright);}
+
+  .hamburger{
+    display:none;
+    background:none;border:none;cursor:pointer;
+    width:32px;height:32px;padding:0;
+    flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  }
+  .hamburger span{
+    display:block;width:22px;height:2px;background:var(--ink);
+    border-radius:2px;transition:transform 0.2s ease, opacity 0.2s ease;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  @media (max-width:640px){
+    .hamburger{display:flex;}
+    nav{
+      display:none;
+      position:absolute;top:68px;left:0;right:0;
+      background:#fff;border-bottom:1px solid var(--line);
+      flex-direction:column;align-items:flex-start;gap:0;
+      padding:8px 32px 16px;
+    }
+    nav.open{display:flex;}
+    nav button, nav a{width:100%;padding:12px 0;}
+  }
+
+  /* Hero */
+  .hero{
+    padding:96px 0 88px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{position:relative;z-index:2;}
+  .hero-tag{
+    font-family:var(--mono);font-size:18px;color:var(--blue-accent);
+    margin:0 0 18px;
+  }
+  .hero-tag::before{content:"> ";}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(36px,5vw,54px);
+    line-height:1.12;
+    font-weight:600;
+    margin:0 0 20px;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  h1 .accent{color:var(--blue-bright);}
+  .hero p.lede{
+    font-size:18px;color:#3A4A63;max-width:520px;margin:0 0 32px;
+  }
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--sans);font-weight:600;font-size:15px;
+    padding:12px 22px;border-radius:6px;
+    text-decoration:none;cursor:pointer;border:1.5px solid transparent;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--blue-deep);color:#fff;}
+  .btn-primary:hover{background:var(--blue-bright);}
+  .btn-ghost{background:transparent;color:var(--blue-deep);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--blue-accent);}
+
+  .hero-bg{
+    position:absolute;right:-60px;top:-40px;width:420px;height:420px;
+    background:radial-gradient(circle at 30% 30%, var(--wash), transparent 70%);
+    z-index:1;
+  }
+  .bracket{
+    position:absolute;right:6%;top:18%;
+    font-family:var(--mono);font-size:120px;color:var(--line);
+    z-index:1;user-select:none;pointer-events:none;
+    line-height:1;
+  }
+
+  /* Section heading */
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:36px;border-bottom:1px solid var(--line);padding-bottom:16px;
+  }
+  .section-head h2{
+    font-family:var(--display);font-size:28px;font-weight:600;margin:0;
+  }
+  .section-head .count{
+    font-family:var(--mono);font-size:13px;color:var(--blue-accent);
+  }
+
+  /* Projects */
+  .projects{padding:70px 0 90px;background:var(--wash);}
+  .project-list{display:flex;flex-direction:column;gap:56px;}
+  .project{
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+  }
+  .project:nth-child(2){direction:rtl;}
+  .project:nth-child(2) .project-info{direction:ltr;}
+
+  .screenshot{
+    background:#fff;border:1px solid var(--line);border-radius:8px;
+    overflow:hidden;box-shadow:0 1px 3px rgba(16,35,63,0.06);
+  }
+  .browser-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 12px;background:#EDF1F7;border-bottom:1px solid var(--line);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;background:#C7D4E3;}
+  .browser-url{
+    flex:1;margin-left:6px;background:#fff;border:1px solid var(--line);
+    border-radius:4px;padding:4px 10px;font-family:var(--mono);
+    font-size:11px;color:#7C8CA6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .screenshot-frame{
+    aspect-ratio:16/10;background:
+      repeating-linear-gradient(45deg, #F7F9FC, #F7F9FC 10px, #EEF2F7 10px, #EEF2F7 20px);
+    display:flex;align-items:center;justify-content:center;
+    color:#9BAEC6;font-family:var(--mono);font-size:13px;text-align:center;padding:20px;
+    overflow:hidden;
+  }
+  .screenshot-frame img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+
+  .project-info .eyebrow{
+    font-family:var(--mono);font-size:12.5px;color:var(--blue-accent);margin:0 0 10px;
+  }
+  .project-info h3{
+    font-family:var(--display);font-size:24px;font-weight:600;margin:0 0 12px;
+  }
+  .project-info p{color:#3A4A63;font-size:15.5px;margin:0 0 16px;}
+  .stack{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+  .stack span{
+    font-family:var(--mono);font-size:12px;color:var(--blue-deep);
+    background:#fff;border:1px solid var(--line);border-radius:4px;
+    padding:4px 9px;
+  }
+  .project-links{display:flex;gap:16px;}
+  .project-links a{
+    font-size:14px;font-weight:600;color:var(--blue-deep);text-decoration:none;
+    border-bottom:1.5px solid var(--blue-accent);padding-bottom:2px;
+  }
+  .project-links a:hover{color:var(--blue-bright);}
+
+  @media (max-width:720px){
+    .project, .project:nth-child(2){grid-template-columns:1fr;direction:ltr;}
+    .hero{padding:70px 0 60px;}
+    .bracket{display:none;}
+  }
+
+  /* Skills */
+  .skills{padding:70px 0 90px;background:var(--paper);}
+  .skill-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  }
+  .skill-card{
+    border:1px solid var(--line);border-radius:8px;
+    padding:20px 20px;background:var(--wash);
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .skill-icon{
+    flex:0 0 auto;width:40px;height:40px;border-radius:9px;
+    background:#fff;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .skill-icon img{width:22px;height:22px;object-fit:contain;}
+  .skill-name{
+    font-family:var(--display);font-size:16.5px;font-weight:600;
+    margin:0 0 6px;color:var(--blue-deep);
+  }
+  .skill-desc{font-size:13.5px;color:#3A4A63;margin:0;}
+
+  @media (max-width:720px){
+    .skill-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:480px){
+    .skill-grid{grid-template-columns:1fr;}
+  }
+
+  /* Footer */
+  footer{padding:40px 0;border-top:1px solid var(--line);}
+  footer .wrap{
+    display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;
+  }
+  footer p{margin:0;font-size:13.5px;color:#7C8CA6;}
+  .footer-links{display:flex;gap:18px;align-items:center;}
+  .footer-links a{
+    color:var(--blue-deep);display:inline-flex;
+    width:34px;height:34px;align-items:center;justify-content:center;
+    border-radius:6px;border:1px solid var(--line);
+  }
+  .footer-links a svg{width:17px;height:17px;}
+  .footer-links a:hover{color:#fff;background:var(--blue-deep);border-color:var(--blue-deep);}
+
+  /* About overlay */
+  .about-overlay{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(16,35,63,0.45);
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    opacity:0;visibility:hidden;
+    transition:opacity 0.22s ease;
+  }
+  .about-overlay.open{opacity:1;visibility:visible;}
+  .about-panel{
+    background:#fff;max-width:560px;width:100%;
+    border-radius:10px;padding:44px 40px;
+    max-height:85vh;overflow-y:auto;
+    position:relative;
+    transform:translateY(14px);
+    transition:transform 0.22s ease;
+    box-shadow:0 20px 50px rgba(16,35,63,0.25);
+  }
+  .about-overlay.open .about-panel{transform:translateY(0);}
+  .about-close{
+    position:absolute;top:20px;right:20px;
+    background:var(--wash);border:none;border-radius:6px;
+    width:32px;height:32px;cursor:pointer;color:var(--ink);
+    font-size:16px;line-height:1;
+  }
+  .about-close:hover{background:var(--line);}
+  .about-panel .eyebrow{font-family:var(--mono);font-size:12.5px;color:var(--blue-accent);margin:0 0 10px;}
+  .about-panel h2{font-family:var(--display);font-size:26px;font-weight:600;margin:0 0 18px;}
+  .about-panel p{color:#3A4A63;font-size:15.5px;margin:0 0 16px;}
+  .about-panel .facts{
+    list-style:none;padding:0;margin:24px 0 0;
+    display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;
+    border-top:1px solid var(--line);padding-top:20px;
+  }
+  .about-panel .facts li{font-size:14px;}
+  .about-panel .facts b{display:block;color:var(--ink);font-weight:600;}
+  .about-panel .facts span{color:#7C8CA6;font-family:var(--mono);font-size:12.5px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">Rowel <span>Navaluna</span></a>
+    <nav id="mainNav">
+      <a href="#top">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <button id="aboutTrigger" type="button">About</button>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <p class="hero-tag">web developer</p>
+    <h1>Building clean, fast<br>interfaces for the <span class="accent">web.</span></h1>
+    <p class="lede">I'm Your Name, a web developer who turns ideas into responsive, well-built sites and apps. Below are two projects that show how I work.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View projects</a>
+      <button class="btn btn-ghost" type="button" id="aboutTriggerHero">About me</button>
+    </div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Projects</h2>
+    </div>
+
+    <div class="project-list">
+
+      <article class="project">
+        <div class="screenshot">
+          <div class="browser-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="browser-url">project-one.yourdomain.com</span>
+          </div>
+          <!-- To add your screenshot: replace the src link below with your image
+               (upload it somewhere like Imgur, or host it alongside this file
+               and use its filename, e.g. src="healthie-screenshot.png") -->
+          <div class="screenshot-frame">
+            <img src="healthie-screenshot.jpg" alt="Healthie project screenshot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder-text" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">Drop project screenshot here<br>(recommended 1280×800)</div>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>Healthie</h3>
+          <p>A short description of what this project does, the problem it solves, and your role in building it.</p>
+          <div class="stack">
+            <span>WordPress</span><span>Divi</span>
+          </div>
+          <div class="project-links">
+            <!-- Add your live project link in the href below -->
+            <a href="#">Live site</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="screenshot">
+          <div class="browser-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="browser-url">project-two.yourdomain.com</span>
+          </div>
+          <!-- To add your screenshot: replace the src link below with your image
+               (upload it somewhere like Imgur, or host it alongside this file
+               and use its filename, e.g. src="braidhouse-screenshot.png") -->
+          <div class="screenshot-frame">
+            <img src="braidhouse-screenshot.jpg" alt="BraidHouse project screenshot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder-text" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">Drop project screenshot here<br>(recommended 1280×800)</div>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>BraidHouse</h3>
+          <p>A short description of what this project does, the problem it solves, and your role in building it.</p>
+          <div class="stack">
+            <span>Webflow</span><span>Custom Code</span>
+          </div>
+          <div class="project-links">
+            <!-- Add your live project link in the href below -->
+            <a href="#">Live site</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="screenshot">
+          <div class="browser-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="browser-url">project-three.yourdomain.com</span>
+          </div>
+          <!-- To add your screenshot: replace the src link below with your image
+               (upload it somewhere like Imgur, or host it alongside this file
+               and use its filename, e.g. src="portfolio-screenshot.png") -->
+          <div class="screenshot-frame">
+            <img src="portfolio-screenshot.jpg" alt="My Portfolio project screenshot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder-text" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">Drop project screenshot here<br>(recommended 1280×800)</div>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>My Portfolio</h3>
+          <p>A short description of what this project does, the problem it solves, and your role in building it.</p>
+          <div class="stack">
+            <span>HTML</span><span>CSS</span>
+          </div>
+          <div class="project-links">
+            <!-- Add your live project link in the href below -->
+            <a href="#">Live site</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Skills</h2>
+    </div>
+
+    <!--
+      HOW TO CHANGE A SKILL ICON:
+      Each icon below is just an <img> tag. To swap one out, replace the
+      "src" link with a link to any other icon image (SVG or PNG both work).
+      Good free sources: https://simpleicons.org  or  https://icons8.com
+      Example: src="https://cdn.simpleicons.org/wordpress"
+    -->
+
+    <div class="skill-grid">
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/html5" alt="HTML5">
+        </div>
+        <div>
+          <p class="skill-name">HTML &amp; CSS</p>
+          <p class="skill-desc">Semantic markup and modern layout with Flexbox and Grid.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/wordpress" alt="WordPress">
+        </div>
+        <div>
+          <p class="skill-name">WordPress (Divi)</p>
+          <p class="skill-desc">Building and customizing sites with the Divi page builder.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/webflow" alt="Webflow">
+        </div>
+        <div>
+          <p class="skill-name">Webflow</p>
+          <p class="skill-desc">Designing and publishing responsive sites visually.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/github" alt="GitHub">
+        </div>
+        <div>
+          <p class="skill-name">GitHub</p>
+          <p class="skill-desc">Version control, collaboration, and hosting project code.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/netlify" alt="Netlify">
+        </div>
+        <div>
+          <p class="skill-name">Netlify</p>
+          <p class="skill-desc">Deploying and hosting sites straight from a GitHub repo.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/adobephotoshop" alt="Photoshop">
+        </div>
+        <div>
+          <p class="skill-name">Photoshop</p>
+          <p class="skill-desc">Editing and retouching images for web and marketing use.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/canva" alt="Canva">
+        </div>
+        <div>
+          <p class="skill-name">Canva</p>
+          <p class="skill-desc">Quick, on-brand graphics and layouts for social and web.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
+          <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/capcut.svg" alt="CapCut">
+        </div>
+        <div>
+          <p class="skill-name">CapCut</p>
+          <p class="skill-desc">Editing short-form video content for social platforms.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Your Name. Built with HTML, CSS &amp; JavaScript.</p>
+  </div>
+</footer>
+
+<div class="about-overlay" id="aboutOverlay">
+  <div class="about-panel">
+    <button class="about-close" id="aboutClose" type="button" aria-label="Close">✕</button>
+    <p class="eyebrow">about</p>
+    <h2>Hi, I'm Your Name.</h2>
+    <p>Write a short paragraph here about who you are, how you got into web development, and what kind of work you enjoy building.</p>
+    <p>Add a second paragraph on your approach, current focus, or what you're learning right now.</p>
+    <ul class="facts">
+      <li><b>Based in</b><span>City, Country</span></li>
+      <li><b>Focus</b><span>Frontend &amp; Backend</span></li>
+      <li><b>Experience</b><span>X years</span></li>
+      <li><b>Available for</b><span>Freelance / Full-time</span></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('aboutOverlay');
+  function openAbout(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeAbout(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+  document.getElementById('aboutTrigger').addEventListener('click', openAbout);
+  document.getElementById('aboutTriggerHero').addEventListener('click', openAbout);
+  document.getElementById('aboutClose').addEventListener('click', closeAbout);
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeAbout(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAbout(); });
+
+  // Mobile hamburger menu
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mainNav = document.getElementById('mainNav');
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    hamburgerBtn.classList.toggle('open', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen);
+  });
+  mainNav.querySelectorAll('a, button').forEach((el) => {
+    el.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      hamburgerBtn.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
