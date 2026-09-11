@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rowel Navaluna Portfolio</title>
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -94,7 +95,7 @@
     font-family:var(--mono);font-size:18px;color:var(--blue-accent);
     margin:0 0 18px;
   }
-  .hero-tag::before{content:"> ";}
+  .hero-tag::before{content:"- ";}
   h1{
     font-family:var(--display);
     font-size:clamp(36px,5vw,54px);
@@ -240,13 +241,14 @@
     display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;
   }
   footer p{margin:0;font-size:13.5px;color:#7C8CA6;}
-  .footer-links{display:flex;gap:18px;align-items:center;}
+  .contact{padding:70px 0 90px;background:var(--wash);}
+  .footer-links{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
   .footer-links a{
-    color:var(--blue-deep);display:inline-flex;
-    width:34px;height:34px;align-items:center;justify-content:center;
+    color:var(--blue-deep);display:inline-flex;align-items:center;gap:7px;
+    height:34px;padding:0 14px;
     border-radius:6px;border:1px solid var(--line);
+    font-family:var(--sans);font-size:13.5px;font-weight:500;text-decoration:none;
   }
-  .footer-links a svg{width:17px;height:17px;}
   .footer-links a:hover{color:#fff;background:var(--blue-deep);border-color:var(--blue-deep);}
 
   /* About overlay */
@@ -298,6 +300,7 @@
       <a href="#top">Home</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
       <button id="aboutTrigger" type="button">About</button>
     </nav>
     <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Toggle menu" aria-expanded="false">
@@ -309,9 +312,9 @@
 <section class="hero" id="top">
   <div class="hero-bg"></div>
   <div class="wrap">
-    <p class="hero-tag">web developer</p>
-    <h1>Building clean, fast<br>interfaces for the <span class="accent">web.</span></h1>
-    <p class="lede">I'm Your Name, a web developer who turns ideas into responsive, well-built sites and apps. Below are two projects that show how I work.</p>
+    <p class="hero-tag">web developer<br>- graphic design</p>
+    <h1>Building clean, fast interfaces and eye-catching designs for the <span class="accent">web.</span></h1>
+    <p class="lede">I'm Rowel Navaluna, a web developer and graphic designer who turns ideas into responsive websites and polished visuals. Below are two projects that show how I work.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#projects">View projects</a>
       <button class="btn btn-ghost" type="button" id="aboutTriggerHero">About me</button>
@@ -456,6 +459,15 @@
       </div>
       <div class="skill-card">
         <div class="skill-icon">
+          <img src="https://cdn.simpleicons.org/framer" alt="Framer">
+        </div>
+        <div>
+          <p class="skill-name">Framer</p>
+          <p class="skill-desc">Designing and publishing interactive, responsive sites.</p>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">
           <img src="https://cdn.simpleicons.org/github" alt="GitHub">
         </div>
         <div>
@@ -503,9 +515,24 @@
   </div>
 </section>
 
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Contact</h2>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:rowelnavaluna24@gmail.com">✉ Email</a>
+      <!-- Replace the href below with your Facebook profile link -->
+      <a href="https://facebook.com/yourprofile">f Facebook</a>
+      <!-- Replace the href below with your LinkedIn profile link -->
+      <a href="https://linkedin.com/in/yourprofile">in LinkedIn</a>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <p>© 2026 Your Name. Built with HTML, CSS &amp; JavaScript.</p>
+    <p>© 2026 Rowel Navaluna. All Rights Reserved.</p>
   </div>
 </footer>
 
